@@ -14,7 +14,6 @@ public:
 
     for (; l < r;)
     {
-
       v = max(v, (r - l) * min(height[l], height[r]));
       if (height[l] <= height[r])
       {

@@ -10,17 +10,13 @@ public:
     bool canJump(vector<int> &nums)
     {
         int n = nums.size();
-        if (n == 1)
-        {
-            return true;
-        }
-
-        for (int i = 0; i < n - 1; i++)
-        {
-            // cout<<i+nums[i]<<" "<<n-1<<endl;
-            if (i + nums[i] >= n - 1)
-            {
-                return true;
+        int rightMost = 0;
+        for(int i=0; i<n; i++){ 
+            if(i <= rightMost){
+                rightMost = max(rightMost, i+nums[i]);
+                if(rightMost >= n-1){
+                    return true;
+                }
             }
         }
 

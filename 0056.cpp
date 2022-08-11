@@ -30,10 +30,9 @@ public:
         res.push_back(e);
       }
       else
-      {
-        　
-            //相交和包含的区别在于新区间的末尾是谁
-            res.back()[1] = max(R, res.back()[1]);
+      { 
+        //相交和包含的区别在于新区间的末尾是谁
+        res.back()[1] = max(R, res.back()[1]);
       }
     }
     return res;
