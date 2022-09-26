@@ -68,6 +68,41 @@ public:
 	}
 };
 
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        //中心扩散
+        int l = 0, r = 0, n = s.size();
+
+        for(int i=0; i<n; i++){
+            pair<int, int> p1 = extend(s, i, i);
+            pair<int, int> p2 = extend(s, i, i+1);
+            
+            if(r-l < p1.second - p1.first){
+                r = p1.second;
+                l = p1.first;
+            }
+
+            if(r-l < p2.second - p2.first){
+                r = p2.second;
+                l = p2.first;
+            }
+        }
+        
+
+        return s.substr(l, r-l+1);
+    }
+
+    pair<int, int> extend(string s, int l, int r){
+        for(;l>=0 && r<s.size() && s[l] == s[r];){
+            l--;
+            r++;
+        }
+        //退出判断是多+1次， 这里-1
+        return {l+1, r-1};
+    }
+};
+
 /*
 分析:   回文子串的子串也是回文子串， 根据这个特性，可以从最短的回文子串开始扩展， 同时要注意越界条件以及最短的回文子串是1
 

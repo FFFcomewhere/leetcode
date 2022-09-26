@@ -4,56 +4,34 @@
 #include <map>
 using namespace std;
 
-class Solution
-{
+class Solution {
+private:
+    vector<vector<int>>  res;
 public:
-    vector<vector<int>> pathSum(TreeNode *root, int targetSum)
-    {
-        vector<vector<int>> res;
-        vector<int> sub_res;
-
-        if (!root)
-        {
-            return res;
-        }
-
-        targetSum -= root->val;
-        sub_res.emplace_back(root->val);
-        feedBack(root, targetSum, res, sub_res);
+    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+        vector<int> subRes;
+        feedBack(root, subRes, targetSum);
         return res;
     }
 
-    void feedBack(TreeNode *root, int targetSum, vector<vector<int>> &res, vector<int> &sub_res)
-    {
-        if (targetSum == 0 && root->left == nullptr && root->right == nullptr)
-        {
-            res.emplace_back(sub_res);
+    void feedBack(TreeNode* root, vector<int> &subRes, int targetSum) {
+        if(root == nullptr) {
             return;
         }
 
-        if (root == nullptr)
-        {
-            return;
+        subRes.emplace_back(root->val);
+        targetSum-=root->val;
+
+        if(root->left == nullptr && root->right == nullptr && targetSum == 0){
+            res.emplace_back(subRes);
         }
 
-        if (root->left)
-        {
-            sub_res.emplace_back(root->left->val);
-            feedBack(root->left, targetSum - root->left->val, res, sub_res);
-            sub_res.pop_back();
-        }
-
-        if (root->right)
-        {
-            sub_res.emplace_back(root->right->val);
-            feedBack(root->right, targetSum - root->right->val, res, sub_res);
-            sub_res.pop_back();
-        }
-
+        feedBack(root->left, subRes, targetSum);
+        feedBack(root->right, subRes, targetSum);
+        subRes.pop_back();
         return;
     }
 };
-
 /*
 分析: dfs 找到退出条件
 

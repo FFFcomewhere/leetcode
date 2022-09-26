@@ -5,19 +5,26 @@
 using namespace std;
 
 //动态规划
-class Solution
-{
+class Solution {
 public:
-    int maxSubArray(vector<int> &nums)
-    {
-        int f0 = 0, _max = nums[0];
-
-        for (int i = 0; i < nums.size(); i++)
-        {
-            f0 = max(nums[i], f0 + nums[i]);
-            _max = max(_max, f0);
+    int maxSubArray(vector<int>& nums) {
+        int n = nums.size();
+        if(n==0){
+            return 0;
         }
-        return _max;
+        
+        int dp0 = nums[0];
+        int res = dp0;
+        for(int i=1; i<n; i++){
+            if(dp0>0){
+                dp0 = dp0+nums[i];
+            } else {
+                dp0 = nums[i];
+            }
+            res = max(res, dp0);
+        }
+
+        return res;
     }
 };
 

@@ -4,6 +4,7 @@
 #include <map>
 using namespace std;
 
+
 class Solution
 {
 public:
@@ -24,6 +25,30 @@ public:
     return;
   }
 };
+
+
+// 法二，旋转 拆分为翻转和对折
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+
+        for(int i=0; i<n/2; i++){
+            for(int j=0; j<n; j++){
+                swap(matrix[i][j], matrix[n-1-i][j]);
+            }
+        }
+
+ 
+        for(int i=0; i<n; i++){
+            for(int j=0; j<i; j++){
+                swap(matrix[i][j], matrix[j][i]);
+            }
+        }       
+        return;
+    }
+};
+
 
 /*
 分析: 辅助数组，可以看出新数组位置和旧数组位置的关系NM[j][n-i-1] = M[i][j]； 

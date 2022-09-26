@@ -25,6 +25,45 @@ public:
     }
 };
 
+//反转链表 
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        //find mid 
+        ListNode *slow = head, *fast = head;
+
+        for(;fast->next && fast->next->next;){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        ListNode* rList = reverseList(slow->next);
+         
+        for(;rList;) {
+            if(head->val != rList->val){
+                return false;
+            } else {
+                
+                head = head->next;
+                rList = rList->next;
+            }
+        }
+        
+        return true;
+    }
+
+    ListNode* reverseList(ListNode* head) {
+        ListNode *pre = nullptr, *cur = head;
+
+        for(;cur != nullptr;) {
+            ListNode* temp = cur->next;
+            cur->next = pre;
+            pre = cur;
+            cur = temp;
+        }
+        return pre;
+    }
+};
 
 /*
 分析:

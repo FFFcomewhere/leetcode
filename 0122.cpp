@@ -5,41 +5,38 @@
 using namespace std;
 
 //动态规划
-class Solution
-{
+class Solution {
 public:
-    int maxProfit(vector<int> &prices)
-    {
+    int maxProfit(vector<int>& prices) {
         int n = prices.size();
-        int dp[n][2];
-        dp[0][0] = 0, dp[0][1] = -prices[0];
-        for (int i = 1; i < n; i++)
-        {
-            dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i]);
-            dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] - prices[i]);
-        }
+        
+        vector<vector<int>> dp(n, vector<int>(2, 0));
+        dp[0][0] = 0;
+        dp[0][1] = -prices[0];
 
-        return dp[n - 1][0];
+        for(int i=1; i<n; i++){
+            dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i]);
+            dp[i][1] = max(dp[i-1][0]-prices[i], dp[i-1][1]);
+        }
+        return dp[n-1][0];
     }
 };
-
 //动态规划 空间优化
-class Solution
-{
+class Solution {
 public:
-    int maxProfit(vector<int> &prices)
-    {
+    int maxProfit(vector<int>& prices) {
         int n = prices.size();
-        int dp0 = 0, dp1 = -prices[0];
-        for (int i = 1; i < n; i++)
-        {
-            int Newdp0 = max(dp0, dp1 + prices[i]);
-            int Newdp1 = max(dp1, dp0 - prices[i]);
-            dp0 = Newdp0;
-            dp1 = Newdp1;
-        }
+        
+        int dpThrow = 0, dpGet = 0;
+        dpThrow = 0;
+        dpGet = -prices[0];
 
-        return dp0;
+        for(int i=1; i<n; i++){
+            int tempThrow = dpThrow, tempGet = dpGet;
+            dpThrow = max(tempThrow, tempGet+prices[i]);
+            dpGet = max(tempThrow-prices[i], tempGet);
+        }
+        return dpThrow;
     }
 };
 

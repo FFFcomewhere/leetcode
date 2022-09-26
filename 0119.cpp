@@ -37,6 +37,46 @@ public:
   }
 };
 
+
+//空间优化0.1
+class Solution {
+public:
+    vector<int> getRow(int rowIndex) {
+        vector<int> dp(rowIndex+1, 1);
+    
+        if(rowIndex < 2) return dp;
+
+        for(int i=2; i<=rowIndex; i++){
+            vector<int> lastDp = dp;
+            for(int j=1; j<i; j++){
+              dp[j] = lastDp[j-1] + lastDp[j];
+            }
+        }
+        return dp;
+    }
+};
+
+//空间优化0.2
+class Solution {
+public:
+    vector<int> getRow(int rowIndex) {
+        vector<int> dp(rowIndex+1, 1);
+    
+        if(rowIndex < 2) return dp;
+
+        for(int i=2; i<=rowIndex; i++){
+            int dp0 = dp[1], dp1 = dp[2];
+            for(int j=1; j<i; j++){
+              int temp = dp[j];
+              dp[j] = dp0 + dp1;
+              dp0 = dp1;
+              dp1 = temp;
+            }
+        }
+        return dp;
+    }
+};
+
 /*
 分析: 找到数组键的关系
 

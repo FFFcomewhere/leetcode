@@ -51,27 +51,27 @@ public:
 class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {
-        if(coins.size() == 0){
+        int n = coins.size();
+        if(n == 0){
             return -1;
         }
 
-        vector<int> data(amount+1, 0);
-
+        int _max = amount+1;
+        vector<int> dp(amount+1, _max);
+        dp[0] = 0;
         for(int i=1; i<=amount; i++){
-            int _min = INT_MAX;
-            for(int j=0; j<coins.size(); j++){
-                if(i-coins[j] >=0 && data[i-coins[j]] < _min){
-                    _min = data[i-coins[j]]+1;
+            for(int j=0; j<n; j++){
+                if(coins[j]<=i){
+                    dp[i] = min(dp[i], dp[i-coins[j]]+1);
                 }
             }
-            data[i] = _min;
         }
-
-        if(data[amount] == INT_MAX){
-            return -1;
-        } 
         
-        return data[amount];
+        if(dp[amount]>amount){
+            return -1;
+        } else {
+            return dp[amount];
+        }
     }
 };
 

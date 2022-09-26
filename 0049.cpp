@@ -2,6 +2,7 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <algorithm>
 using namespace std;
 
 //排序 时间 O(nklogk)  空间O(nk)
@@ -29,6 +30,13 @@ public:
 };
 
 
+int main(){
+    Solution s;
+    vector<string> strs{"eat","tea","tan","ate","nat","bat"};
+    s.groupAnagrams(strs);
+
+    return 0;
+}
 
 //计数 应为字母异构次的字母完全一样，所以出现的单词书也相等
 
